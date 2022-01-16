@@ -2,11 +2,12 @@ from flask import Flask
 from users.routes import users
 from main.routes import main
 
-from connect_database import conn
+from connect_database import dbOperation
+
 
 def hello():
-    return conn.conn_test()
-
+    connection = dbOperation()
+    return connection.dataBaseConnection()
 
 def create_app():
     

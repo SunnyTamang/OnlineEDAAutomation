@@ -1,0 +1,3 @@
+2022-01-16/22:57:13		Opened database successfully
+2022-01-16/22:57:16		Opened database successfully
+2022-01-16/23:40:05		DB connection established successfully
