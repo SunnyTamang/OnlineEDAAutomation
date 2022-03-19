@@ -29,11 +29,23 @@
 <!--===============================================================================================-->
 </head>
 <body style="background-color: #666666;">
+	{% block content %}
+	<div class="container">
+		{% for message in get_flashed_messages() %}
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<a href="{{ url_for('main.login') }}">{{ message }}</a>
+		</div>
+		{% endfor %}
 	
+		{% block page_content %}{% endblock %}
+	</div>
+	{% endblock %}
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form"  id="myForm" method="POST" action="{{ url_for('main.login') }}" onsubmit=" return aTestFunction()">
+				<form class="login100-form validate-form"  id="myForm" method="POST" action="{{ url_for('main.user_registration') }}" onsubmit="return aTestFunction()">
+					
 				<!-- onsubmit="event.preventDefault();"> -->
 				<!-- onsubmit = "return aTestFunction();"> -->
 					<!-- action="{{ url_for('main.check1') }}"> -->
@@ -124,7 +136,7 @@
 			  </p>
 	
 				
-				<a type="button" class="btn btn-outline-success waves-effect stretched-link" data-dismiss="modal" id="modalLogin" href="{{ url_for('main.login') }}">Login</a>
+				<a type="button" class="btn btn-outline-success waves-effect stretched-link" data-dismiss="modal" id="modalLogin" href={{ url_for('main.login') }}">Login</a>
 			  </div>
 			</div>
 		  </div>
@@ -132,6 +144,11 @@
 		</div>
 	  </div> 
 	  <!--Modal: modalCoupon-->
+
+
+
+
+	 
 	
 	  <!--Section: Live preview-->
 
@@ -200,7 +217,7 @@
 <script>
     function aTestFunction(obj){
 		// obj.preventDefault();
-		// obj.stopPropagation();
+		//  obj.stopPropagation();
 		var validRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 		var validName = /^[A-Za-z]+$/;
 	
@@ -216,12 +233,12 @@
 
 				if($("#reg_lastname").val().match(validName) != null){
 					if($("#reg_pass").val() === $("#reg_con_pass").val()){
-						$('#modalCoupon').modal('show');
+						//  $('#modalCoupon').modal('show');
 						$("#didnotmatch").html("");
 						// $(".alert").show();
-						 alert('User have been added successfully! click OK to login!');
+						//   alert('User have been added successfully! click OK to login!');
 						// return false
-						
+						return true;
 						// $("#myForm").unbind('onsubmit');
 						
 					}else{
@@ -264,6 +281,5 @@
 </script>
 
 
-	
 </body>
 </html>
