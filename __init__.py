@@ -2,7 +2,7 @@ from flask import Flask
 from users.routes import users
 from main.routes import main
 
-from connect_database import dbOperation
+from database_operations import dbOperation
 
 
 def hello():

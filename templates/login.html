@@ -137,6 +137,20 @@
 						</span>
 					</div>
 
+
+					{% block content %}
+	<div class="container">
+		{% for message in get_flashed_messages() %}
+		<div class="alert alert-danger">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<a href="{{ url_for('main.login') }}">{{ message }}</a>
+		</div>
+		{% endfor %}
+	
+		{% block page_content %}{% endblock %}
+	</div>
+	{% endblock %}
+
 					<div class="json-result">
 							
 					</div>

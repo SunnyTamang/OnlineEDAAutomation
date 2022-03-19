@@ -3,7 +3,7 @@ from flask import Flask
 
 
 app = create_app()
-hello()
+# hello()
 # print(db_con)
 
 if __name__ == '__main__':

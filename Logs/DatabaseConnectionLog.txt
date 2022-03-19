@@ -253,3 +253,16 @@
 2022-03-19/14:30:02		DB connection established successfully
 2022-03-19/14:34:25		DB connection established successfully
 2022-03-19/14:35:02		User registration successfull
+2022-03-19/14:46:24		DB connection established successfully
+2022-03-19/14:46:49		DB connection established successfully
+2022-03-19/14:47:05		DB connection established successfully
+2022-03-19/14:51:03		DB connection established successfully
+2022-03-19/14:52:41		DB connection established successfully
+2022-03-19/14:55:31		DB connection established successfully
+2022-03-19/14:56:27		DB connection established successfully
+2022-03-19/15:07:13		DB connection established successfully
+2022-03-19/15:07:59		DB connection established successfully
+2022-03-19/15:09:23		DB connection established successfully
+2022-03-19/15:10:48		DB connection established successfully
+2022-03-19/15:43:45		User registration successfull
+2022-03-19/16:07:58		User not found

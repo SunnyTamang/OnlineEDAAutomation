@@ -4,7 +4,7 @@
 
 from urllib.request import Request
 from flask import Blueprint, render_template, request, flash
-from connect_database import dbOperation
+from database_operations import dbOperation
 
 main = Blueprint('main', __name__)
 
@@ -52,8 +52,13 @@ def check():
            
             user_email = request.form.get('login_email')
             user_password = request.form.get('pass')
-            
-            
+            user_login_check = dbOperation()
+            user_validation = user_login_check.validateUser(user_email,user_password)
+            if user_validation:
+                return render_template('homepage.html')
+            else:
+                flash('Login failed')
+                return render_template('login.html')
             
         else:
             return 'this is bullshit'
