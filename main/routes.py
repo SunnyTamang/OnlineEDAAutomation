@@ -2,8 +2,9 @@
 
 # from crypt import methods
 
+import re
 from urllib.request import Request
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, redirect, render_template, request, flash, session, url_for
 from database_operations import dbOperation
 
 main = Blueprint('main', __name__)
@@ -44,24 +45,54 @@ def user_registration():
 def signup():
     return render_template('signup.html')
 
-@main.route('/check', methods=['POST','GET'])
-def check():
+@main.route('/home', methods=['POST','GET'])
+def home():
     # form = login(request.form)
+    # getUsername=''
+    get_project_details=()
+    project_added=''
     try:
+        
+    
         if request.method == 'POST':
+           
            
             user_email = request.form.get('login_email')
             user_password = request.form.get('pass')
             user_login_check = dbOperation()
             user_validation = user_login_check.validateUser(user_email,user_password)
+            # getUsername = user_login_check.getUserName(user_email,user_password)
+            # print(getUsername)
+            
             if user_validation:
-                return render_template('homepage.html')
+                # return redirect(url_for('main.check'))
+
+
+                
+                
+                getUsername = user_login_check.getUserName(user_email,user_password)
+                session['username'] =  getUsername
+                session['email'] = user_email
+
+                get_project_details=user_login_check.getProjectDetails(session['username'].split(',')[0],session['username'].split(',')[1], user_email)
+                print(get_project_details)
+                for rows in get_project_details:
+                    print(rows)
+                return render_template('newproject.html', username = session['username'], rows=get_project_details)
             else:
                 flash('Login failed')
-                return render_template('login.html')
-            
+                return redirect(url_for("main.login"))
+                #return render_template('login.html')
+           
         else:
-            return 'this is bullshit'
+            project_added = request.form.get('todo')
+            print(project_added)
+            if(project_added == 'project_added'):
+                print('hello')
+                return render_template("homepage.html",username=session['username'], rows=get_project_details)
+            return render_template("newproject.html",username=session['username'], rows=get_project_details)
+        #     return 'this is bullshit'
+        # return render_template('homepage.html', username = getUsername)
     except Exception as e:
         print(e)
         return e

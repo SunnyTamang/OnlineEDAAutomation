@@ -1,7 +1,10 @@
 from asyncio.log import logger
 from cmath import log
+from gettext import find
 from json.tool import main
 import logging
+from tabnanny import process_tokens
+from unicodedata import name
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from flask import flash, session 
@@ -101,14 +104,14 @@ class  dbOperation:
             CQLString = f"INSERT INTO users.t_sec_user_mst (id, email, firstname, lastname, password) VALUES (uuid(),'{self.email}', '{self.first_name}', '{self.last_name}', '{self.password}');"
             
             session.execute(CQLString)
-            file = open("Logs/DatabaseConnectionLog.txt",'a+')
+            file = open("Logs/ApplicationLog.txt",'a+')
             self.logger.log(file,"User registration successfull")
             file.close()
             # if (data_inserted != null):
             #     flash('You were successfully logged in')
                  
         except Exception as e:
-            file = open("Logs/DatabaseConnectionLog.txt",'a+')
+            file = open("Logs/ApplicationLog.txt",'a+')
             self.logger.log(file,e)
             file.close()
             return False
@@ -137,24 +140,120 @@ class  dbOperation:
             session.row_factory = tuple_factory
             rows = session.execute(CQLString).one()
             if rows:
-                file = open("Logs/DatabaseConnectionLog.txt",'a+')
+                file = open("Logs/ApplicationLog.txt",'a+')
                 self.logger.log(file,"User Found. Login Successful")
                 file.close()
                 return True
             else:
-                file = open("Logs/DatabaseConnectionLog.txt",'a+')
+                file = open("Logs/ApplicationLog.txt",'a+')
                 self.logger.log(file,"User not found. Login Failed")
                 file.close()
                 return False
             
         except Exception as e:
-            file = open("Logs/DatabaseConnectionLog.txt",'a+')
+            file = open("Logs/ApplicationLog.txt",'a+')
             self.logger.log(file,e)
             file.close()
             return False
+
+
+    def getUserName(self, email, password):
+        session = self.connect_to_database.db_connection()
+        self.email = email
+        self.password = password
+        name = ''
+        try:
+            CQLString = f"SELECT firstname, lastname from users.t_sec_user_mst where email = '{self.email}' and password = '{self.password}' allow filtering;"
+
+
+            
+            
+            session.row_factory = tuple_factory
+            rows = session.execute(CQLString).one()
+            name = rows[0].capitalize() +","+ rows[1].capitalize()
+                
+            if rows:
+                file = open("Logs/ApplicationLog.txt",'a+')
+                self.logger.log(file,"User Found.")
+                file.close()
+                return name
+            else:
+                file = open("Logs/ApplicationLog.txt",'a+')
+                self.logger.log(file,"User not found.")
+                file.close()
+                return ""
+            
+        except Exception as e:
+            file = open("Logs/ApplicationLog.txt",'a+')
+            self.logger.log(file,e)
+            file.close()
+            return name
             
         
+    def initialProjectCheckpoint(self, first_name, last_name, user_email, project_name, created_on, last_updated_on, project_status):
+        session = self.connect_to_database.db_connection()
+        self.first_name = first_name
+        self.last_name = last_name
+        self.user_email = user_email
+        self.project_name = project_name
+        # self.project_id = project_id
+        self.created_on =  created_on
+        self.last_updated_on = last_updated_on
+        self.project_status = project_status
+        
+        try:
+            CQLString = f"INSERT INTO users.user_project_names (first_name, last_name, user_email, project_name, proj_id, created_on, last_updated_on, project_status) VALUES ('{self.first_name}', '{self.last_name}', '{self.user_email}', '{self.project_name}', uuid(), '{self.created_on}', '{self.last_updated_on}', '{self.project_status}');"
+            print(CQLString)
+            session.execute(CQLString)
+            file = open("Logs/ApplicationLog.txt",'a+')
+            self.logger.log(file,"Project details added")
+            file.close()
+            return True
 
+        except Exception as e:
+            file = open("Logs/ApplicationLog.txt",'a+')
+            self.logger.log(file,e)
+            file.close()
+            return False
+
+
+
+    def getProjectDetails(self, first_name, last_name, user_email):
+        session = self.connect_to_database.db_connection()
+        self.first_name = first_name
+        self.last_name = last_name
+        self.user_email = user_email
+        # self.project_name = project_name
+        try:
+            project_names=[]
+            CQLString = f"SELECT project_name from users.user_project_names where first_name = '{self.first_name}' and last_name = '{self.last_name}' and user_email = '{self.user_email}' allow filtering;"
+
+
+            
+            print(CQLString)
+            session.row_factory = tuple_factory
+            rows = session.execute(CQLString)
+            for row in rows:
+                project_names.append(row[0])
+            print(rows)
+            if rows:
+                file = open("Logs/ApplicationLog.txt",'a+')
+                self.logger.log(file,"Project Found: " +len(rows))
+                file.close()
+                return tuple(rows)
+            else:
+                file = open("Logs/ApplicationLog.txt",'a+')
+                self.logger.log(file,"No project found")
+                file.close()
+                return project_names
+            
+        except Exception as e:
+            file = open("Logs/ApplicationLog.txt",'a+')
+            self.logger.log(file,e)
+            file.close()
+            return False        
+        # finally:
+        #     return True
 
 # if __name__ == '__main__':
 #     logging.info('Database connected')

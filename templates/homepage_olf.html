@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,116 +50,96 @@
         </button>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <span class="navbar-text">Welcome&nbsp;</span><span class="navbar-text" name="nav-name" id="nav-name"> {{ username }}</span>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="landing-nav-home" href="{{ url_for('main.home') }}">Home</a>
-                </li>
+
+              <li class="nav-item">
+                <span class="navbar-text">Welcome&nbsp;</span><span class="navbar-text" name="nav-name" id="nav-name"> {{ username }}</span>
+              </li> 
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li> -->
             </ul>
         </div>
         
       </nav>
-      {% block content %}
-	<div class="container">
-		{% for message in get_flashed_messages() %}
-		<div class="alert alert-danger">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<a href="{{ url_for('users.landing') }}">{{ message }}</a>
-		</div>
-		{% endfor %}
-	
-		{% block page_content %}{% endblock %}
-	</div>
-	{% endblock %}
+
       <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Overview')" id="defaultOpen">Overview</button>
-        <button class="tablinks" onclick="openTab(event, 'Column-wise-details')">Column Wise Details</button>
-        <button class="tablinks" onclick="openTab(event, 'Correlations')">Correlations</button>
-        <button class="tablinks" onclick="openTab(event, 'Missing-values')">Missing Values</button>
-        <button class="tablinks" onclick="openTab(event, 'Dataset')">Dataset</button>
+        <button class="tablinks" onclick="openTab(event, 'new-project')" id="defaultOpen">New Project</button>
+        <button class="tablinks" onclick="openTab(event, 'dashboard')">Dashboard</button>
+        
       </div>
       
-      <div id="Overview" class="tabcontent">
-        <h3>Overview</h3>
-        <p>Overview</p>
+      <div id="new-project" class="tabcontent">
+        <form class="new-project-tab-content" enctype="multipart/form-data" method="POST" id="new-project-tab-content-id" action="{{ url_for('users.landing') }}">
+          
         
-        <div class="container">
-          <h2>Bordered Table</h2>
-          <p>The .table-bordered class adds borders to a table:</p>            
-          <table class="table table-bordered" style="text-align: center;">
-            <thead>
-              <tr>
-                <th>Rows</th>
-                <th>Columns</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="table-primary">
-                <td>John</td>
-                <td>Doe</td>  
-              </tr>
+          <div class="row mb-3">
+              <label for="inputprojectName" class="col-sm-2 col-form-label">Project Name</label>
+              <div class="col-sm-5">
+                  <input type="text" class="form-control" name="inputprojectName" id="inputprojectName" placeholder="Project Name">
+                  
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="selectDataset" class="col-sm-2 col-form-label">Select Dataset</label>
+              <div class="col-sm-5">
+                <input type="file" name="file" id="selectDataset"/>
+                
+                <!-- <input type="text" class="form-control" id="selectDataset" placeholder="Select Dataset"> -->
+              </div>
+          </div>
+          
+          <div class="row mb-3">
+            <label for="selectType" class="col-sm-2 col-form-label">Select Type</label>
+            <div class="col-md-5">
+            <select name="selectType" id="selectType">
+              <option value="csv">CSV</option>
+              <option value="json">JSON</option>
+              <option value="xml">XML</option>
               
-            </tbody>
-          </table>
+            </select>
+            </div>
         </div>
-        
+
+          <div class="row">
+              <div class="col-sm-10 offset-sm-2">
+                  <button type="submit" class="btn btn-primary">Upload</button>
+              </div>
+          </div>
+
+          
+      </form>
+      </div>
+      
+      <div id="dashboard" class="tabcontent">
+        <h3>Dashboard</h3>
+        <p>Dashboard</p> 
+
+        <!-- dynamic cards code. -->
+        {% if rows %}
+        <div class="container">
+            <div class="row">
+                {% for row in rows %}
+                <div class="card col-3 d-flex align-items-stretch">
+                    <div class="card-body text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ row }}</h4>
+                            <!-- <h5 class="card-text">Item ID: {{ row.ID }}</h5>
+                            <h5 class="card-text">Number in Stock: {{ row.numInStock }}</h5> -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
 
       </div>
       
-      <div id="Column-wise-details" class="tabcontent">
-        <h3>Column Wise Details</h3>
-        <p>Column-wise-details</p> 
-      </div>
+    
       
-      <div id="Correlations" class="tabcontent">
-        <h3>Correlations</h3>
-        <p>Correlations</p>
-      </div>
-      
-      <div id="Missing-values" class="tabcontent">
-        <h3>Missing Values</h3>
-        <p>Missing Values</p>
-      </div>
-
-      <div id="Dataset" class="tabcontent">
-        <h3>Dataset</h3>
-        <p>Dataset</p>
-      </div>
-      
-
-
 
     
-      <!-- <div class="row">
-        <div class="col-3">
-        <nav class ="navbar bg-light">
-        <ul class ="nav navbar-nav">
-        <li class ="nav-item">
-        <a class ="nav-link" href="#"> Home </a>
-        </li>
-        <li class ="nav-item">
-        <a class ="nav-link" href="#"> Services </a>
-        </li>
-        <li class ="nav-item">
-        <a class ="nav-link" href="#"> Contact </a>
-        </li>
-        <li class ="nav-item">
-        <a class ="nav-link" href="#"> Blogs </a>
-        </li>
-        </ul>
-        </nav>
-        </div> -->
-
-
-
-
-
-
-
-
-
     <!--===============================================================================================-->
 	<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
@@ -178,36 +160,55 @@
         <script src="static/js/main.js"></script>
 
 
+          <script>
+            // $(document).ready(function(){
+              $(document).on('submit','#new-project-tab-content-id',function(event){
 
-
-
-        <!-- <script type="text/javascript">
-          $(document).on('click','#landing-nav-home',function(e)
-          {
-            
-            console.log('hello');
-            
-            e.preventDefault();
-          
-            $.ajax({
-              type:'POST',
-              url:'/home',
-              // contentType:'multipart/form-data',
-              data:{
-                todo:'project_added'
-              },
               
-              success:function()
-              {
+                $.ajax({
+                  data:{
+                    todo:'project_added'
+                  },
+                  type: 'GET',
+                  url:'/home'
+                })
+                .done(function(data) {
+                    console.log('this is from done');
+
+                  
+                // });
+                // event.preventDefault();
+              })
+            });
+            // $(document).ready(function(e)
+            // {
+              
+            //   console.log('hello');
+            //   // console.log($("#selectDataset").val())
+              
+            
+            //   $.ajax({
+            //     type:'POST',
+            //     url:'/home',
+            //     // contentType:'multipart/form-data',
+            //     // data:{
+            //     //   todo:'project_added'
+            //     // },
+            //     data: 'project_added',
                 
-              }
-            })
-          
-          });
-        </script> -->
+            //     success:function(e)
+            //     {
+            //       console.log("this is from success")
+            //     }
+            //   })
+            
+            // });
+          </script>
+
+        
 
         <script>
-            function openTab(evt, cityName) {
+            function openTab(evt, tabName) {
               var i, tabcontent, tablinks;
               tabcontent = document.getElementsByClassName("tabcontent");
               for (i = 0; i < tabcontent.length; i++) {
@@ -217,13 +218,16 @@
               for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
               }
-              document.getElementById(cityName).style.display = "block";
+              document.getElementById(tabName).style.display = "block";
               evt.currentTarget.className += " active";
             }
             
             // Get the element with id="defaultOpen" and click on it
             document.getElementById("defaultOpen").click();
-            </script>
-    
+        </script>
+
+
+        
+  
     </body>
     </html>
