@@ -81,7 +81,7 @@
             {% if rows %}
         <div class="container">
             <div class="row">
-                {% for row in rows %}
+                {% for i in range(len(rows)) %}
                 <!-- <div class="card col-3 d-flex align-items-stretch">
                     <div class="card-body text-center">
                         <div class="card-body">
@@ -93,6 +93,7 @@
 
 
                 <div class="col-12 col-md-6 col-lg-3" style="margin-bottom: 40px;">
+                    <form class="project-dashboard" enctype="multipart/form-data" method="POST" id="project-dashboard-id" action="{{ url_for('users.from_dashboard') }}">
                     <div class="card">
         
                         <div class="card-header px-4 pt-4">
@@ -109,10 +110,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title mb-0">{{ row }}</h5>
+                            <h5 class="card-title mb-0">{{ rows[i] }}</h5>
                             <div class="badge bg-success my-2">Active</div>
+                            <p class="card-text mb-0" style="font-size: small;" id="projectfilename" name="projectfilename">{{ file_name[i] }}</p>
+                            <input type="hidden" class="card-text mb-0" style="font-size: small;" id="projectfilename" name="projectfilename" value= {{ file_name[i] }}>
                         </div>
-                        <form class="project-dashboard" enctype="multipart/form-data" method="POST" id="project-dashboard-id" action="{{ url_for('users.from_dashboard') }}">
+                        <!-- <form class="project-dashboard" enctype="multipart/form-data" method="POST" id="project-dashboard-id" action="{{ url_for('users.from_dashboard') }}"> -->
                         <div class="card-body px-4 pt-6">
                             <!-- <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
                                 sed ipsum.</p> -->
@@ -126,7 +129,7 @@
                                 <button type="submit" class="btn btn-primary" name="from_dashboard">Continue</button>
                             </div>
                         </div>
-                        </form>
+                        <!-- </form> -->
                         <!-- <ul class="list-group list-group-flush">
                             <li class="list-group-item px-4 pb-4">
                                 <p class="mb-2 font-weight-bold">Progress <span class="float-right">100%</span></p>
@@ -137,6 +140,7 @@
                             </li>
                         </ul> -->
                     </div>
+                </form>
                     </div>
                     
                 {% endfor %}

@@ -11,7 +11,7 @@ from flask import flash, session
 from application_logging.logger import App_Logger
 from DB_connect.db_connect import connect_to_DB
 from cassandra.query import tuple_factory
-
+from cassandra.query import dict_factory
 # logging.basicConfig(filename="newfile.log",
 #                     format='%(asctime)s %(message)s',
 #                     filemode='w')
@@ -206,7 +206,7 @@ class  dbOperation:
             return name
             
         
-    def initialProjectCheckpoint(self, first_name, last_name, user_email, project_name, created_on, last_updated_on, project_status):
+    def initialProjectCheckpoint(self, first_name, last_name, user_email, project_name, created_on, last_updated_on, project_status, filename):
         """
         It inserts a row into a table
         
@@ -228,9 +228,10 @@ class  dbOperation:
         self.created_on =  created_on
         self.last_updated_on = last_updated_on
         self.project_status = project_status
+        self.filename = filename
         
         try:
-            CQLString = f"INSERT INTO users.user_project_names (first_name, last_name, user_email, project_name, proj_id, created_on, last_updated_on, project_status) VALUES ('{self.first_name}', '{self.last_name}', '{self.user_email}', '{self.project_name}', uuid(), '{self.created_on}', '{self.last_updated_on}', '{self.project_status}');"
+            CQLString = f"INSERT INTO users.user_project_names (first_name, last_name, user_email, project_name, proj_id, created_on,filename, last_updated_on, project_status) VALUES ('{self.first_name}', '{self.last_name}', '{self.user_email}', '{self.project_name}', uuid(), '{self.created_on}','{self.filename}', '{self.last_updated_on}', '{self.project_status}');"
             print(CQLString)
             session.execute(CQLString)
             file = open("Logs/ApplicationLog.txt",'a+')
@@ -263,7 +264,8 @@ class  dbOperation:
         # self.project_name = project_name
         try:
             project_names=[]
-            CQLString = f"SELECT project_name from users.user_project_names where first_name = '{self.first_name}' and last_name = '{self.last_name}' and user_email = '{self.user_email}' allow filtering;"
+            project_file_name=[]
+            CQLString = f"SELECT project_name, filename from users.user_project_names where first_name = '{self.first_name}' and last_name = '{self.last_name}' and user_email = '{self.user_email}' allow filtering;"
 
 
             
@@ -272,17 +274,21 @@ class  dbOperation:
             rows = session.execute(CQLString)
             for row in rows:
                 project_names.append(row[0])
-            print(rows)
+                project_file_name.append(row[1])
+                
+            # print(rows)
+            
             if rows:
                 file = open("Logs/ApplicationLog.txt",'a+')
                 self.logger.log(file,"Project Found: " +len(rows))
                 file.close()
+                
                 return tuple(rows)
             else:
                 file = open("Logs/ApplicationLog.txt",'a+')
                 self.logger.log(file,"No project found")
                 file.close()
-                return project_names
+                return project_names, project_file_name
             
         except Exception as e:
             file = open("Logs/ApplicationLog.txt",'a+')

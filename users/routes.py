@@ -64,7 +64,7 @@ def landing():
 
 
 
-                save_project_details = db_operation.initialProjectCheckpoint(user_first_name,user_last_name,user_email, user_project_name, user_project_created_on, user_project_last_updated_on, user_project_status)
+                save_project_details = db_operation.initialProjectCheckpoint(user_first_name,user_last_name,user_email, user_project_name, user_project_created_on, user_project_last_updated_on, user_project_status, filename)
             
                 print(save_project_details)
                 if (save_project_details):
@@ -145,11 +145,11 @@ def dashboard():
                 
                 
 
-                get_project_details=user_login_check.getProjectDetails(session['username'].split(',')[0],session['username'].split(',')[1], user_email)
-                print(get_project_details)
-                for rows in get_project_details:
-                    print(rows)
-                return render_template('dashboard.html', username = session['username'], rows=get_project_details)
+                get_project_details, get_file_details =user_login_check.getProjectDetails(session['username'].split(',')[0],session['username'].split(',')[1], user_email)
+                # print(get_project_details)
+                # for rows in get_project_details:
+                #     print(rows)
+                return render_template('dashboard.html', username = session['username'], rows=get_project_details, file_name=get_file_details, len=len)
             else:
                 print(session['username'])
                 flash('Login failed')
@@ -177,6 +177,9 @@ def from_dashboard():
     :return: a redirect to the landing page.
     """
     # return render_template("landing.html")
-    session['from_dashboard'] = True
+    if request.method == "POST":
+        session['from_dashboard'] = True
+        print(request.form.get("projectfilename"))
+        session['filename'] = os.path.join("data_upload_folder", request.form.get("projectfilename"))
     return redirect(url_for("users.landing"), code=307)
     
