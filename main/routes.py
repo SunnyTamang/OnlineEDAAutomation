@@ -12,7 +12,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/', methods=['POST','GET'])
 def login():
-    
+    session['from_dashboard'] = ""
     return render_template('login.html')
 
 @main.route('/user-registration', methods=['POST', 'GET'])
@@ -49,8 +49,11 @@ def signup():
 def home():
     # form = login(request.form)
     # getUsername=''
+    if session['from_dashboard'] == True:
+        session['from_dashboard'] = False
     get_project_details=()
     project_added=''
+   
     try:
         
     

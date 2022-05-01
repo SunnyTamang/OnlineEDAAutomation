@@ -120,6 +120,15 @@ class  dbOperation:
 
 
     def validateUser(self, email, password):
+        """
+        It takes in email and password as parameters and checks if the user exists in the database. If
+        the user exists, it returns True else it returns False
+        
+        :param email: The email address of the user
+        :param password: The password for the user
+        :return: A tuple of tuples.
+        """
+        
 
         # cloud_config= {
         #         'secure_connect_bundle': 'secure-connect-onlineeda.zip'
@@ -158,6 +167,13 @@ class  dbOperation:
 
 
     def getUserName(self, email, password):
+        """
+        It takes an email and password as input and returns the firstname and lastname of the user
+        
+        :param email: user@gmail.com
+        :param password: 'b.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ.ZQ
+        :return: The name of the user.
+        """
         session = self.connect_to_database.db_connection()
         self.email = email
         self.password = password
@@ -191,6 +207,18 @@ class  dbOperation:
             
         
     def initialProjectCheckpoint(self, first_name, last_name, user_email, project_name, created_on, last_updated_on, project_status):
+        """
+        It inserts a row into a table
+        
+        :param first_name: String
+        :param last_name: "Doe"
+        :param user_email: user@gmail.com
+        :param project_name: "Test Project"
+        :param created_on: 2020-02-20
+        :param last_updated_on: 2020-02-20
+        :param project_status: This is a string that can be either "active" or "inactive"
+        :return: The return value is a boolean value.
+        """
         session = self.connect_to_database.db_connection()
         self.first_name = first_name
         self.last_name = last_name
@@ -219,6 +247,15 @@ class  dbOperation:
 
 
     def getProjectDetails(self, first_name, last_name, user_email):
+        """
+        It takes in a first name, last name, and email address and returns a list of project names that
+        the user has access to.
+        
+        :param first_name: "John"
+        :param last_name: 'Smith'
+        :param user_email: 'test@test.com'
+        :return: A list of tuples.
+        """
         session = self.connect_to_database.db_connection()
         self.first_name = first_name
         self.last_name = last_name
@@ -254,6 +291,14 @@ class  dbOperation:
             return False        
         # finally:
         #     return True
+
+
+    def add_csv_data_to_DB():
+        """
+        This function adds data from a csv file to a database.
+        """
+        pass
+
 
 # if __name__ == '__main__':
 #     logging.info('Database connected')

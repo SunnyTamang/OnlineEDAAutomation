@@ -115,7 +115,7 @@ def landing():
 
 @users.route('/new-project', methods= ['POST','GET'])
 def new_project():
-
+    session['from_dashboard'] = False
     return render_template("newproject.html")
 
 
@@ -172,6 +172,10 @@ def dashboard():
 
 @users.route('/landings', methods=['POST','GET'])
 def from_dashboard():
+    """
+    It's a function that redirects to the landing page, but it also sets a session variable to True
+    :return: a redirect to the landing page.
+    """
     # return render_template("landing.html")
     session['from_dashboard'] = True
     return redirect(url_for("users.landing"), code=307)

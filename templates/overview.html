@@ -29,7 +29,7 @@
             <ul class="list-unstyled components">
                 
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
-                    <a href="{{ url_for('application.overview' )}}">Overview</a>
+                    <a href="">Overview</a>
                     
                 </li>
                 <li class="active" style="padding-top: 37px;">
@@ -46,7 +46,7 @@
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
-                  <a href="{{ url_for('application.overview' )}}">Dataset</a>
+                  <a href="">Dataset</a>
                   
                 </li>
                 
@@ -93,14 +93,95 @@
                 </div>
             </nav>
 
-            <div class="mt-4 p-5 bg-dark text-white rounded">
-              <h1>Welcome {{ username }}</h1>
-              <p>Please use side toggles to navigate through the application</p>
-            </div>
+          
         
                
                 
+                <div class="container" style="text-align: center;">
+                  <h2>Shape</h2>
+                  <p>Shape of dataset:</p>            
+                  <table class="table table-bordered table-primary" style="text-align: center;">
+                    <thead>
+                      <tr>
+                        <th>Rows</th>
+                        <th>Columns</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="table-secondary">
+                        <td>{{ shape[0] }}</td>
+                        <td>{{ shape[1] }}</td>  
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
                 
+                <div class="container" style="padding-top: 100px;text-align: center;">
+                  <div class="row">
+                    <div class="col">
+                      <h2>Dataset Statistics</h2>
+                      <table class="table table-primary table-bordered" style="text-align: center;">
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>Values</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="table-secondary">
+                            <td>No. of variables</td>
+                            <td>{{ data_stats[0] }}</td>
+                          </tr>
+                          <tr class="table-secondary">
+                            <td>No. of observation</td>
+                            <td>{{ data_stats[1] }}</td>
+                          </tr>
+                          <tr class="table-secondary">
+                            <td>Missing cells</td>
+                            <td>{{ data_stats[2] }}</td>
+                          </tr>
+                          <tr class="table-secondary">
+                            <td>Duplicate rows</td>
+                            <td>{{ data_stats[3] }}</td>  
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col">
+                      <h2>Variable Types</h2>
+                      <table class="table table-bordered table-primary" style="text-align: center;">
+                        <thead>
+                          <tr>
+                            <th>Datatypes</th>
+                            <th>Values</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for key,values in zip(variable_type_and_count.keys(), variable_type_and_count.values()) %}
+                          <tr class="table-secondary">
+                            <td>{{ key }}</td>
+                            <td>{{ values }}</td>
+                          </tr>
+                          <!-- <tr class="table-secondary">
+                            <td>Categorical</td>
+                            <td>Doe</td>
+                          </tr>
+                          <tr class="table-secondary">
+                            <td>Boolean</td>
+                            <td>Doe</td>
+                          </tr>
+                          <tr class="table-secondary">
+                            <td>Date</td>
+                            <td>Doe</td>  
+                          </tr> -->
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
                 
 
         </div>

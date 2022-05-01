@@ -1,6 +1,8 @@
+
 from flask import Flask
 from users.routes import users
 from main.routes import main
+from application_routes.routes import application
 import os
 
 from database_operations import dbOperation
@@ -21,5 +23,6 @@ def create_app():
 
     app.register_blueprint(users)
     app.register_blueprint(main)
+    app.register_blueprint(application)
 
     return app
