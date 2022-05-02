@@ -2,6 +2,7 @@
 from multiprocessing.reduction import duplicate
 from flask import Blueprint, redirect,render_template,flash,request, session, url_for
 import pandas  as pd
+from pyparsing import col
 from application_logging.logger import App_Logger
 
 class application_operations:
@@ -10,6 +11,7 @@ class application_operations:
 
    def __init__(self):
       self.logger = App_Logger()
+      
         
 
    def import_csv(self,filename):
@@ -45,3 +47,23 @@ class application_operations:
       type_and_count = { k:v for (k,v) in zip(check.keys(), check.values) }
       print(type_and_count)
       return type_and_count
+
+
+   def get_column_wise_counts(self):
+      count_check={k:v for (k,v) in zip(self.dataset.count().keys(),self.dataset.count().values)}
+      return count_check
+
+
+   def get_basic_descriptive_analysis(self):
+      
+      describe_columns=self.dataset.describe().columns
+      
+      describe = self.dataset.describe()
+     
+     
+      
+     
+            
+
+      
+      return  describe_columns, describe
