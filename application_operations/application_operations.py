@@ -1,9 +1,17 @@
 # It creates a class called application_operations.
 from multiprocessing.reduction import duplicate
-from flask import Blueprint, redirect,render_template,flash,request, session, url_for
+from flask import Blueprint, redirect,render_template,flash,request, session, url_for, Response
 import pandas  as pd
+import numpy as np
 from pyparsing import col
 from application_logging.logger import App_Logger
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+import io
+import matplotlib.pyplot as plt 
+
+plt.rcParams["figure.figsize"] = [7.50, 3.50]
+plt.rcParams["figure.autolayout"] = True
 
 class application_operations:
 
@@ -60,10 +68,16 @@ class application_operations:
       
       describe = self.dataset.describe()
      
-     
-      
-     
-            
-
-      
       return  describe_columns, describe
+
+
+   def plot_png(self):
+      
+      fig = Figure()
+      axis = fig.add_subplot(1, 1, 1)
+      xs = np.random.rand(100)
+      ys = np.random.rand(100)
+      axis.plot(xs, ys)
+      output = io.BytesIO()
+      FigureCanvas(fig).print_png(output)
+      return Response(output.getvalue(), mimetype='image/png')

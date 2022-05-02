@@ -30,3 +30,11 @@ def column_wise_details():
     count_check = application_process.get_column_wise_counts()
     desc_columns, describe = application_process.get_basic_descriptive_analysis()
     return render_template("column_wise_details.html",zip=zip, count_check=count_check,  desc_columns=desc_columns,  describe=describe)
+
+@application.route("/correlations")
+def correlation():
+    application_process= application_operations()
+    ploting_png=application_process.plot_png()
+
+    print(type(ploting_png))
+    return render_template("correlation.html")
