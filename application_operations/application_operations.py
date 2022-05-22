@@ -165,3 +165,11 @@ class application_operations:
       # plt.cla()
       img.seek(0)
       return send_file(img, mimetype='image/png')
+
+
+   def dataset_check(self):
+      data = self.dataset
+      column_names = [key for key in data.head(10).keys()]
+      print(column_names)
+      print(len(data.head(10).keys()))
+      return data.head(10).keys(), data.head(10).values, data.tail(10).values

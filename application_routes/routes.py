@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pydoc import describe
 from tkinter import Canvas
 from turtle import shape
+from graphviz import render
 import pandas as pd
 from flask import Blueprint, redirect,render_template,flash,request, send_file, session, url_for, Response
 from werkzeug.utils import secure_filename
@@ -112,3 +113,12 @@ def nullity_matrix():
     application_process = application_operations()
     application_process.import_csv(session['filename'])
     return application_process.nullity_matrix()
+
+
+@application.route('/sample-dataset')
+def dataset():
+    application_process = application_operations()
+    application_process.import_csv(session['filename'])
+    column_names, head,tail = application_process.dataset_check()
+    return render_template('dataset.html', column_names=column_names, head=head, tail=tail, zip=zip)
+    

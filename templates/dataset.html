@@ -42,11 +42,11 @@
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
-                  <a href="{{ url_for('application.overview' )}}">Missing Values</a>
+                  <a href="{{ url_for('application.missing_values' )}}">Missing Values</a>
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
-                  <a href="{{ url_for('application.dataset' )}}">Dataset</a>
+                  <a href="{{ url_for('application.dataset') }}">Dataset</a>
                   
                 </li>
                 
@@ -105,8 +105,7 @@
         role="tab"
         aria-controls="ex3-tabs-1"
         aria-selected="true"
-        >Pearson's Correlation</a
-        
+        >First 10 rows</a
       >
     </li>
     <li class="nav-item" role="presentation">
@@ -118,26 +117,15 @@
         role="tab"
         aria-controls="ex3-tabs-2"
         aria-selected="false"
-        >Spearman's Correlation</a
+        >Last 10 rows</a
       >
     </li>
-    <li class="nav-item" role="presentation">
-        <a
-          class="nav-link"
-          id="ex3-tab-3"
-          data-mdb-toggle="tab"
-          href="#ex3-tabs-3"
-          role="tab"
-          aria-controls="ex3-tabs-3"
-          aria-selected="false"
-          >Kendall Correlation</a
-        >
-      </li>
     
   </ul>
   <!-- Tabs navs -->
   
   <!-- Tabs content -->
+  
   <div class="tab-content" id="ex2-content">
     <div
       class="tab-pane fade show active"
@@ -145,9 +133,32 @@
       role="tabpanel"
       aria-labelledby="ex3-tab-1"
     >
-      
-      <p>Pearson</p>
-      <img src="{{ url_for('application.plot_pearson_heatmap') }}">
+    <h2 style="text-align: center;">First 10 Sample Data</h2>
+      <div class="container" style="text-align: center;overflow: auto;"">
+        
+        <table class="table table-bordered table-primary" style="text-align: center;">
+          <thead>
+            <tr>
+            {% for key in column_names: %}
+            
+              <th>{{ key }}</th>
+            {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for heads in head: %}
+               
+            <tr class="table-secondary">
+                {% for i in heads: %}
+              <td>{{ i }}</td>
+              {% endfor %}
+            </tr>
+            
+           {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
 
 
 
@@ -158,19 +169,38 @@
       role="tabpanel"
       aria-labelledby="ex3-tab-2"
     >
-      
-      <p>Spearman</p>
-      <img src="{{ url_for('application.plot_spearman_heatmap') }}">
-    </div>
-      <div
-      class="tab-pane fade"
-      id="ex3-tabs-3"
-      role="tabpanel"
-      aria-labelledby="ex3-tab-3"
-    >
-      
-      <p>Kendall</p>
-     
+    <h2 style="text-align: center;">Last 10 Sample Data</h2>  
+      <div class="container" style="text-align: center;overflow: auto;">
+                  
+        <table class="table table-bordered table-primary" style="text-align: center;">
+          <thead>
+            <tr>
+                {% for key in column_names: %}
+              <th>{{ key }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for tails in tail: %}
+           <tr class="table-secondary">
+            {% for j in tails: %}
+            <td>{{ j }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+           
+            
+           
+
+          </tbody>
+
+          
+          
+        </table>
+      </div>
+
+
+
     </div>
     
   </div>
