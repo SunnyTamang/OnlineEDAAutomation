@@ -42,7 +42,7 @@
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
-                  <a href="">Missing Values</a>
+                  <a href="{{ url_for('application.overview' )}}">Missing Values</a>
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
@@ -130,7 +130,7 @@
           role="tab"
           aria-controls="ex3-tabs-3"
           aria-selected="false"
-          >Phik Correlation</a
+          >Kendall Correlation</a
         >
       </li>
     
@@ -147,7 +147,7 @@
     >
       
       <p>Pearson</p>
-
+      <img src="{{ url_for('application.plot_pearson_heatmap') }}">
 
 
 
@@ -160,6 +160,7 @@
     >
       
       <p>Spearman</p>
+      <img src="{{ url_for('application.plot_spearman_heatmap') }}">
     </div>
       <div
       class="tab-pane fade"
@@ -168,8 +169,8 @@
       aria-labelledby="ex3-tab-3"
     >
       
-      <p>Phik</p>
-
+      <p>Kendall</p>
+     
     </div>
     
   </div>
