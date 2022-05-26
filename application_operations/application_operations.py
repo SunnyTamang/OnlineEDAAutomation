@@ -110,7 +110,7 @@ class application_operations:
          fig.savefig(img1)
          # plt.cla()
          # plt.clf()
-         # plt.close(fig)
+         plt.close(fig)
          img1.seek(0)
          
          return send_file(img1, mimetype='image/png')
@@ -131,7 +131,7 @@ class application_operations:
          fig2.savefig(img2)
          # plt.cla()
          # plt.clf()
-         # plt.close(fig2)
+         plt.close(fig2)
          img2.seek(0)
          return send_file(img2, mimetype='image/png')
       except Exception as e:
@@ -150,7 +150,7 @@ class application_operations:
       fig3.savefig(img3)
       # plt.cla()
       # plt.clf()
-      # plt.close(fig3)
+      plt.close(fig3)
       # plt.cla()
       img3.seek(0)
       return send_file(img3, mimetype='image/png')
