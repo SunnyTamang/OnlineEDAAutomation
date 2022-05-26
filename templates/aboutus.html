@@ -19,9 +19,10 @@
 </head>
 
 <body>
+
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+        <!-- <nav id="sidebar">
             <div class="sidebar-header">
                 <h3>Online EDA Automation</h3>
             </div>
@@ -52,13 +53,7 @@
                 
             </ul>
 
-            <!-- <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="">Dashboard</a>
-                    
-                </li>
-            </ul> -->
-        </nav>
+        </nav> -->
 
         <!-- Page Content  -->
         <div id="content">
@@ -93,11 +88,74 @@
                 </div>
             </nav>
 
-            <div class="mt-4 p-5 bg-dark text-white rounded">
-              <h1>Welcome {{ username }}</h1>
-              <p>Please use side toggles to navigate through the application</p>
+
+            <div class="about-section">
+                <!-- <button type="button" class="btn btn-default" style='font-size:36px'><i class='fas fa-arrow-left fa-3x' style='font-size:36px'></i>Primary</button> -->
+                <button type="button" class="btn btn-labeled btn-info" style="margin-bottom: 10px;" onclick="history.back()">
+                    <span class="btn-label"><i class="fas fa-arrow-left"></i></span> Back</button>
             </div>
-        
+            <div class="about-section" style="padding: 50px; text-align: center; color:white;background-color: #474e5d;">
+                
+                <h1>About Us</h1>
+                <p>We are bunch of great minds, with the passion to move forward</p>
+                <p>We are all very different, from different cities, at different times. But we have something that unites us all.</p>
+              </div>
+
+            <header class="bg-info text-center py-5 mb-4">
+                <div class="container">
+                  <h1 class="fw-light text-white">Meet the Team</h1>
+                </div>
+              </header>
+              
+              <!-- Page Content -->
+              <div class="container">
+                <div class="row">
+                  <!-- Team Member 1 -->
+                  <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow">
+                      <img src="/static/team/sunny.png" class="card-img-top" alt="...">
+                      <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Sunny Tamang</h5>
+                        <div class="card-text text-black-50">Unknown</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Team Member 2 -->
+                  <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow">
+                      <img src="/static/team/teja.png" class="card-img-top" alt="...">
+                      <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Teja</h5>
+                        <div class="card-text text-black-50">Data Scientist</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Team Member 3 -->
+                  <!-- <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow">
+                      <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
+                      <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Team Member</h5>
+                        <div class="card-text text-black-50">Web Developer</div>
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- Team Member 4 -->
+                  <!-- <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0 shadow">
+                      <img src="https://source.unsplash.com/7u5mwbu7qLg/500x350" class="card-img-top" alt="...">
+                      <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Team Member</h5>
+                        <div class="card-text text-black-50">Web Developer</div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- /.row -->
+              
+              </div>
+              <!-- /.container -->
+            
                
                 
                 
@@ -106,20 +164,7 @@
         </div>
     </div>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!-- Header -->
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-    </script>
-</body>
-
-</html>
+  </body>
+  </html>

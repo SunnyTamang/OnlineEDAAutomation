@@ -113,3 +113,7 @@ def dataset():
     column_names, head,tail = application_process.dataset_check()
     return render_template('dataset.html', column_names=column_names, head=head, tail=tail, zip=zip)
     
+
+@application.route('/about')
+def about_us():
+    return render_template('aboutus.html')
