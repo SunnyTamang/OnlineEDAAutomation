@@ -42,7 +42,7 @@
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
-                  <a href="{{ url_for('application.overview' )}}">Missing Values</a>
+                  <a href="{{ url_for('application.missing_values' )}}">Missing Values</a>
                   
                 </li>
                 <li class="active" style="padding-top: 37px;border-bottom: 1px solid #47748b;">
@@ -133,10 +133,11 @@
           >Kendall Correlation</a
         >
       </li>
+
+      
     
   </ul>
   <!-- Tabs navs -->
-  
   <!-- Tabs content -->
   <div class="tab-content" id="ex2-content">
     <div
@@ -147,7 +148,7 @@
     >
       
       <p>Pearson</p>
-      <img src="{{ url_for('application.plot_pearson_heatmap') }}">
+      <img src="{{ url_for('application.plot_pearson_heatmap') }}" id="pearson" style="margin-left: auto;margin-right: auto;display: block;">
 
 
 
@@ -160,7 +161,9 @@
     >
       
       <p>Spearman</p>
-      <img src="{{ url_for('application.plot_spearman_heatmap') }}">
+      
+      <img src="" id="spearman" style="margin-left: auto;margin-right: auto;display: block;">
+      
     </div>
       <div
       class="tab-pane fade"
@@ -168,10 +171,17 @@
       role="tabpanel"
       aria-labelledby="ex3-tab-3"
     >
-      
+    
       <p>Kendall</p>
+    
+      
+      <img src="" id="kendall" style="margin-left: auto;margin-right: auto;display: block;">
+      
+      
      
     </div>
+
+    
     
   </div>
   <!-- Tabs content -->
@@ -203,9 +213,32 @@
         $("#ex1 a").click(function(e){
             e.preventDefault();
             $(this).tab("show");
+
+        });
+        $("#ex1 a").on('shown.bs.tab', function(event){
+          var x = $(event.target).text()         // active tab
+          var y = $(event.relatedTarget).text();  // previous tab
+          // $(".act span").text(x);
+          // $(".prev span").text(y);
+          if(x == "Spearman's Correlation"){
+            $('#spearman').attr('src',"{{ url_for('application.plot_spearman_heatmap') }}");
+          }
+          else if(x == "Kendall Correlation"){
+            $('#kendall').attr('src',"{{ url_for('application.plot_kendall_heatmap') }}");
+          }
+          else if(x == "Pearson's Correlation"){
+            $('#pearson').attr('src',"{{ url_for('application.plot_pearson_heatmap') }}");
+          }
+          // else{
+          //   $('#pearson').attr('src',"{{ url_for('application.plot_pearson_heatmap') }}");
+          // }
+          // console.log(x)
+          // console.log(y)
         });
     });
     </script>
+
+
 </body>
 
 </html>

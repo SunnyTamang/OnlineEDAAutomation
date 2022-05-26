@@ -49,9 +49,8 @@ def column_wise_details():
     return render_template("column_wise_details.html",zip=zip, count_check=count_check,  desc_columns=desc_columns,  describe=describe)
 
 @application.route("/correlations")
-def correlation():
-    
-    return render_template("correlation.html" )
+def correlation():  
+    return render_template("correlation.html")
 
 # @application.route("/visualise")
 # def plot_png():
@@ -71,20 +70,7 @@ def correlation():
 @application.route('/pearson')
 def plot_pearson_heatmap():
    
-    # application_process=application_operations()
-    # dataset = application_process.return_dataframe(session['filename'])
-    # fig = plt.figure(figsize=(8,8))
-    # plt.title("Heatmap of Pearson's Correlation", fontsize = 20) # title with fontsize 20
-    # plt.xlabel('Years', fontsize = 5) # x-axis label with fontsize 15
-    # plt.ylabel('Monthes', fontsize = 5) # y-axis label with fontsize 15
-    # print(session['filename'])
-    # sns.heatmap(dataset.corr('pearson'), cmap="Blues", annot=True)
-    # canvas = FigureCanvas(fig)
-    # img= io.BytesIO()
-    # fig.savefig(img)
-    # img.seek(0)
-    # return send_file(img, mimetype='image/png')
-
+   
     application_process = application_operations()
     application_process.import_csv(session['filename'])
     return application_process.pearson_correlation()
@@ -93,14 +79,19 @@ def plot_pearson_heatmap():
 def plot_spearman_heatmap():
     application_process = application_operations()
     application_process.import_csv(session['filename'])
+    spear=application_process.spearman_correlation()
+    if spear:
+        print('this is done')
+        spear_conf=True
+    else:
+        print('this is not done')
     return application_process.spearman_correlation()
 
-# @application.route('/kendall')
-# def plot_kendall_heatmap():
-#     application_process = application_operations()
-#     application_process.import_csv(session['filename'])
-#     return application_process.kendall_correlation()
-
+@application.route('/kendall')
+def plot_kendall_heatmap():
+    application_process = application_operations()
+    application_process.import_csv(session['filename'])
+    return application_process.kendall_correlation()
 
 @application.route('/mising-values')
 def missing_values():

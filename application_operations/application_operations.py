@@ -103,12 +103,14 @@ class application_operations:
          
          plt.title(f"Heatmap of Pearson's Correlation", fontsize = 20) # title with fontsize 20
          # plt.tight_layout()
+         # plt.figure()
          sns.heatmap(data1.corr('pearson'), cmap="Blues", annot=True)
          canvas = FigureCanvas(fig)
          img1= io.BytesIO()
          fig.savefig(img1)
          # plt.cla()
          # plt.clf()
+         # plt.close(fig)
          img1.seek(0)
          
          return send_file(img1, mimetype='image/png')
@@ -116,18 +118,24 @@ class application_operations:
          print(e)
       
    def spearman_correlation(self):
-      data2 = self.dataset
-      
-      fig2 = plt.figure(figsize=(8,8))
-      plt.title(f"Heatmap of Spearman's Correlation", fontsize = 20) # title with fontsize 20
-      # plt.tight_layout()
-      sns.heatmap(data2.corr('spearman'), cmap="Blues", annot=True)
-      canvas = FigureCanvas(fig2)
-      img2= io.BytesIO()
-      fig2.savefig(img2)
-      # plt.cla()
-      img2.seek(0)
-      return send_file(img2, mimetype='image/png')
+      try:
+         data2 = self.dataset
+         
+         fig2 = plt.figure(figsize=(8,8))
+         plt.title(f"Heatmap of Spearman's Correlation", fontsize = 20) # title with fontsize 20
+         # plt.tight_layout()
+         # plt.figure()
+         sns.heatmap(data2.corr('spearman'), cmap="Blues", annot=True)
+         canvas = FigureCanvas(fig2)
+         img2= io.BytesIO()
+         fig2.savefig(img2)
+         # plt.cla()
+         # plt.clf()
+         # plt.close(fig2)
+         img2.seek(0)
+         return send_file(img2, mimetype='image/png')
+      except Exception as e:
+         print(e)
    
    def kendall_correlation(self):
       data3 = self.dataset
@@ -135,10 +143,14 @@ class application_operations:
       fig3 = plt.figure(figsize=(8,8))
       plt.title(f"Heatmap of Kendall's Correlation", fontsize = 20) # title with fontsize 20
       # plt.tight_layout()
+      # plt.figure()
       sns.heatmap(data3.corr('kendall'), cmap="Blues", annot=True)
       canvas = FigureCanvas(fig3)
       img3= io.BytesIO()
       fig3.savefig(img3)
+      # plt.cla()
+      # plt.clf()
+      # plt.close(fig3)
       # plt.cla()
       img3.seek(0)
       return send_file(img3, mimetype='image/png')
