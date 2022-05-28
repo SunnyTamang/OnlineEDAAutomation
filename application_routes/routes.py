@@ -1,4 +1,5 @@
 
+
 from dataclasses import dataclass
 from pydoc import describe
 from tkinter import Canvas
@@ -114,6 +115,15 @@ def dataset():
     return render_template('dataset.html', column_names=column_names, head=head, tail=tail, zip=zip)
     
 
-@application.route('/about')
+@application.route('/about', methods=['GET','POST'])
 def about_us():
     return render_template('aboutus.html')
+
+
+@application.route('/overview-post-customization', methods=['POST','GET'])
+def overview_post_customization():
+    if request.method =='POST':
+        # clicked = request.values('data')
+        # clicked = request.form['data']
+        print(request.form['data'])
+    return render_template('post_custom.html')

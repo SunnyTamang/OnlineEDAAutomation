@@ -179,3 +179,8 @@ a.article:hover {
         display: none;
     }
 }
+
+.list-group.inner li{
+    border:none;
+    
+}

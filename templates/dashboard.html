@@ -19,6 +19,9 @@
 </head>
 
 <body>
+
+    
+
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
@@ -153,8 +156,7 @@
 
     <!-- --------------------- -->
 
-
-
+   
 
     <!-- ------------------------- -->
 
@@ -171,7 +173,26 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+    //     $(document).load(function() {
+    //         // $("#todashboard").click(function() {
+    //   // disable button
+    //             $(this).prop("disabled", true);
+    //   // add spinner to button
+    //             $(this).html(
+    //                  `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+    //             );
+    //         // });
+    //     });
+       
     </script>
+   <script type="text/javascript">
+    function loading(){
+        $("#spinner").show();
+        $("body").hide();       
+    }
+  </script>
+
+    
 </body>
 
 </html>
