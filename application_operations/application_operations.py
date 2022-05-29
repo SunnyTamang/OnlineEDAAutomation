@@ -26,7 +26,6 @@ class application_operations:
 
    def __init__(self):
       self.logger = App_Logger()
-      
         
 
    def import_csv(self,filename):
@@ -185,3 +184,81 @@ class application_operations:
       print(column_names)
       print(len(data.head(10).keys()))
       return data.head(10).keys(), data.head(10).values, data.tail(10).values
+
+
+   def duplicate_row_check(self):
+      """
+      It checks if there are any duplicate rows in the dataset and returns the duplicate rows if there
+      are any
+      :return: A tuple of two values. The first value is a string 'Yes' and the second value is a numpy
+      array of the duplicate rows.
+      """
+      data = self.dataset
+      unique_values_for_duplicacy = set(data.duplicated().unique())
+      if True in unique_values_for_duplicacy:
+         return 'Yes', data[data.duplicated()].values
+
+   def duplicate_column_check_byname(self):
+      """
+      It takes a dataframe as input and returns a list of tuples where each tuple contains the names of
+      the columns that have the same values
+      :return: a list of tuples. Each tuple contains the names of the duplicate columns.
+      """
+      data = self.dataset
+      duplicate_column_names={}
+      for i in range(0,len(data.columns)):
+         count=0
+      # print(df.columns.values[i])
+         for j in range(i+1, len(data.columns)):
+            # print(df.columns.values[j])
+            if str(data.columns.values[i]) == str(data.columns.values[j]):
+                  count +=1
+                  duplicate_column_names[data.columns.values[i]]=count
+      if count==0:
+         print('No duplicate columns')
+         duplicate_column_names['NA']=0
+         return duplicate_column_names
+      else:
+         return duplicate_column_names
+
+   def duplicate_column_check_byvalue(self):
+      data = self.dataset
+      duplicateColumnNames = set()
+      list1=[]
+      # Iterate through all the columns 
+      # of dataframe
+      for x in range(data.shape[1]):
+            
+         # Take column at xth index.
+         col = data.iloc[:, x]
+            
+         # Iterate through all the columns in
+         # DataFrame from (x + 1)th index to
+         # last index
+         for y in range(x + 1, data.shape[1]):
+               
+               # Take column at yth index.
+               otherCol = data.iloc[:, y]
+               
+               # Check if two columns at x & y
+               # index are equal or not,
+               # if equal then adding 
+               # to the set
+               if col.equals(otherCol):
+                  duplicateColumnNames.add(data.columns.values[y])
+                  list1.append((data.columns.values[x],data.columns.values[y]))
+      if len(list1) == 0:
+         list1.append(('NA','NA'))
+
+      return list1
+
+
+   def column_data_types(self):
+      data=self.dataset
+      column_dtype_check=[]
+      for col in data.columns:
+         print(data[col].dtypes)
+         column_dtype_check.append((col,str(data[col].dtypes)))
+      print(column_dtype_check)
+      return column_dtype_check
+      

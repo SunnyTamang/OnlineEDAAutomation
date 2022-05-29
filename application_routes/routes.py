@@ -1,6 +1,7 @@
 
 
 from dataclasses import dataclass
+from itertools import count
 from pydoc import describe
 from tkinter import Canvas
 from turtle import shape
@@ -37,14 +38,17 @@ def overview():
     shape = application_process.shape()
     dataset_stats = application_process.dataset_statistics()
     variable_type_and_count =application_process.variable_types()
-    
+    isRowDuplicate, duplicate_row_count = application_process.duplicate_row_check()
+    isColDuplicate_byname= application_process.duplicate_column_check_byname()
+    isColDuplicate_byvalue = application_process.duplicate_column_check_byvalue()
+    column_data_types = application_process.column_data_types()
     isCustom='false'
     if request.method=='POST':
         session['isCustom'] = request.form['customize']
         print(session['isCustom'])
     # print(session['filename'])
    
-    return render_template("overview.html", shape=shape, data_stats=dataset_stats, variable_type_and_count=variable_type_and_count, zip=zip,isCustom=session['isCustom'])
+    return render_template("overview.html", shape=shape, data_stats=dataset_stats, len=len, variable_type_and_count=variable_type_and_count, zip=zip,isCustom=session['isCustom'],isRowDuplicate=isRowDuplicate, duplicate_row_count=len(duplicate_row_count),isColDuplicate_byname=isColDuplicate_byname,isColDuplicate_byvalue=isColDuplicate_byvalue,column_data_types=column_data_types )
 
 @application.route("/column-wise-details")
 def column_wise_details():
@@ -58,20 +62,6 @@ def column_wise_details():
 @application.route("/correlations")
 def correlation():  
     return render_template("correlation.html")
-
-# @application.route("/visualise")
-# def plot_png():
-      
-#     fig = Figure()
-#     axis = fig.add_subplot(1, 1, 1)
-#     xs = np.random.rand(100)
-#     ys = np.random.rand(100)
-#     axis.plot(xs, ys)
-#     output = io.BytesIO()
-#     fig.savefig(output)
-#     output.seek(0)
-#     FigureCanvas(fig).print_png(output)
-#     return send_file(output, mimetype='image/png')
 
 
 @application.route('/pearson')

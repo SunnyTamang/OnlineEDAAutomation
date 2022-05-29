@@ -399,40 +399,60 @@
 
         </div>
         {% if isCustom=='true' %}
-        <h1 style="margin: 100px;text-align:center;background: grey;color: white;">You custom analysis</h1>
-        <div class="container" style="padding-top: 20px;text-align: center;">
+        <h1 style="margin: 20px;text-align:center;background: grey;color: white;">You custom analysis</h1>
+        <div class="container" style="padding-top: 100px;text-align: center;">
+          <h2>Duplicate Rows</h2>          
+          <table class="table table-bordered table-primary" style="text-align: center;">
+            <thead>
+              <tr>
+                <th>Duplicate present(Y/N)</th>
+                <th>Total duplicate rows count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-secondary">
+                <td>{{ isRowDuplicate }}</td>
+                <td>{{ duplicate_row_count }}</td>  
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+        <div class="container" style="padding-top: 100px;text-align: center;">
           <div class="row">
             <div class="col">
-              <h2>Duplicate Rows</h2>
+              <h2>Duplicate Column (value wise)</h2>
               <table class="table table-primary table-bordered" style="text-align: center;">
                 <thead>
                   <tr>
-                    <th>Duplicate present(Y/N)</th>
-                    <th>Total Duplicate Rows Count</th>
+                    <th>Column name</th>
+                    <th>Duplicate column name</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for key,values in zip(variable_type_and_count.keys(), variable_type_and_count.values()) %}
+                  {% for i in isColDuplicate_byvalue: %}
+                  
                   <tr class="table-secondary">
-                    <td>{{ key }}</td>
-                    <td>{{ values }}</td>
+                    <td>{{ i[0] }}</td>
+                    {% for j in range(1,len(i)): %}
+                    <td>{{ i[j] }}</td>
                   </tr>
                   {% endfor %}
-                  
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
             <div class="col">
-              <h2>Duplicate Columns</h2>
+              <h2>Duplicate Columns (name-wise)</h2>
               <table class="table table-bordered table-primary" style="text-align: center;">
                 <thead>
                   <tr>
-                    <th>Column Name</th>
+                    <th>Column name</th>
                     <th>Total Column Count</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {% for key,values in zip(variable_type_and_count.keys(), variable_type_and_count.values()) %}
+                  {% for key,values in isColDuplicate_byname.items(): %}
                   <tr class="table-secondary">
                     <td>{{ key }}</td>
                     <td>{{ values }}</td>
@@ -443,27 +463,29 @@
               </table>
             </div>
           </div>
+        </div>
           <div class="container" style="padding-top: 100px;text-align: center;">
             <h2>Column Datatypes</h2>          
             <table class="table table-bordered table-primary" style="text-align: center;">
               <thead>
                 <tr>
-                  <th>Column Name</th>
+                  <th>Column name</th>
                   <th>Datatype</th>
                 </tr>
               </thead>
               <tbody>
+                {% for columns in column_data_types: %}
                 <tr class="table-secondary">
-                  <td>{{ shape[0] }}</td>
-                  <td>{{ shape[1] }}</td>  
+                  <td>{{ columns[0] }}</td>
+                  <td>{{ columns[1] }}</td>  
                 </tr>
-                
+                {% endfor %}
               </tbody>
             </table>
           </div>
         
 
-        </div>
+        <!-- </div> -->
         {% endif %}
     </div>
 
