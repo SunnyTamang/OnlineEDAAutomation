@@ -144,7 +144,7 @@
                                 <li class="list-group-item">
                                   <div class="form-check">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" value="">Find duplicate rows
+                                      <input type="checkbox" class="form-check-input" value="" id="overview-find-dup-rows" class="overview-find-dup-rows">Find duplicate rows
                                     </label>
                                   </div>
                                 </li>
@@ -153,7 +153,7 @@
                                 <li class="list-group-item">
                                   <div class="form-check">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" value="">Find duplicate columns
+                                      <input type="checkbox" class="form-check-input" value="" id="overview-find-dup-cols" class="overview-find-dup-cols">Find duplicate columns
                                     </label>
                                   </div>
                                 </li>
@@ -162,7 +162,7 @@
                                 <li class="list-group-item">
                                   <div class="form-check">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" value="">Datatype wise column details
+                                      <input type="checkbox" class="form-check-input" value="" id="overview-find-dtype-cols-details" class="overview-find-dtype-cols-details">Datatype wise column details
                                     </label>
                                   </div>
                                 </li>
@@ -445,15 +445,24 @@
   $(document).ready(function(){
     
     $('#customBtn').click(function(){
-      
+        var overview_find_dup_rows = $("#overview-find-dup-rows").is(":checked");
+        var overview_find_dup_cols = $("#overview-find-dup-cols").is(":checked");
+        var overview_find_dtype_cols_details = $("#overview-find-dtype-cols-details").is(":checked");
+        if(overview_find_dup_rows == true){
+          var data = document.getElementById("overview-find-dup-rows").innerHTML
+        }
         $.ajax({
         // url:"{{ url_for('application.overview_post_customization') }}",
         url:"overview-post-customization",
         type:"POST",
-        data:{'data':'Hello'},
+        data:{'overview_find_dup_rows':overview_find_dup_rows,
+               'overview_find_dup_cols': overview_find_dup_cols,
+               'overview_find_dtype_cols_details': overview_find_dtype_cols_details
+              },
         success:function(data){
           // alert(data);
           $("#customizeModal").hide();
+          // $("#customizeModal").unload();
           window.location.href = "overview-post-customization";
         }
       // alert( "Modal submitted with text: ");

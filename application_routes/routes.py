@@ -37,8 +37,14 @@ def overview():
     shape = application_process.shape()
     dataset_stats = application_process.dataset_statistics()
     variable_type_and_count =application_process.variable_types()
-    print(session['filename'])
-    return render_template("overview.html", shape=shape, data_stats=dataset_stats, variable_type_and_count=variable_type_and_count, zip=zip)
+    
+    isCustom='false'
+    if request.method=='POST':
+        session['isCustom'] = request.form['customize']
+        print(session['isCustom'])
+    # print(session['filename'])
+   
+    return render_template("overview.html", shape=shape, data_stats=dataset_stats, variable_type_and_count=variable_type_and_count, zip=zip,isCustom=session['isCustom'])
 
 @application.route("/column-wise-details")
 def column_wise_details():
@@ -125,5 +131,10 @@ def overview_post_customization():
     if request.method =='POST':
         # clicked = request.values('data')
         # clicked = request.form['data']
-        print(request.form['data'])
-    return render_template('post_custom.html')
+        print(request.form)
+        # application_process = application_operations()
+        # application_process.import_csv(session['filename'])
+        # shape = application_process.shape()
+        # dataset_stats = application_process.dataset_statistics()
+        # variable_type_and_count =application_process.variable_types()
+    return render_template('/custom/overview_custom.html')

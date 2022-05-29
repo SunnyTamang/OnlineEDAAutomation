@@ -61,7 +61,7 @@
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content" style="overflow-y: scroll;height: 100px;">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -80,7 +80,10 @@
                                 <a class="nav-link" href="{{ url_for('users.new_project') }}">Upload new dataset</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Customize</a>
+                              <a class="nav-link" href="#customizeModal" data-toggle="modal" ><i class="fa fa-plus" aria-hidden="true"></i> Customize</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="#customizeModal" data-toggle="modal" id="uncustomize"><i class="fa fa-minus" aria-hidden="true"></i> Uncustomize</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('application.about_us')}}">About</a>
@@ -93,7 +96,217 @@
                 </div>
             </nav>
 
+            <div class="modal fade" id="customizeModal" tabindex="-1" role="dialog" aria-labelledby="customizeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg"" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="customizeModalLabel">Customize</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{ url_for('application.overview_post_customization') }}" method="POST">
+                      <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Overview
+                                        <ul class="list-group inner">
+                                          <li class="list-group-item">
+                                            <div class="form-check">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" value="" id="overview-find-dup-rows" class="overview-find-dup-rows">Find duplicate rows
+                                              </label>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <ul class="list-group inner">
+                                          <li class="list-group-item">
+                                            <div class="form-check">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" value="" id="overview-find-dup-cols" class="overview-find-dup-cols">Find duplicate columns
+                                              </label>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <ul class="list-group inner">
+                                          <li class="list-group-item">
+                                            <div class="form-check">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" value="" id="overview-find-dtype-cols-details" class="overview-find-dtype-cols-details">Datatype wise column details
+                                              </label>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                    </li>
+                                    <li class="list-group-item">Column Wise Details
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">
+                                          <div class="form-check">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" value="">Quartile details and advance descrptive stats
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li class="list-group-item">Correlations
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">
+                                          <div class="form-check">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" value="">Interaction between columns
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li class="list-group-item">Visualization
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">Dynamic Graph/Charts
+                                          <ul class="list-group inner">
+                                            <li class="list-group-item">Univariate
+                                              <ul class="list-group inner">
+                                                <li class="list-group-item">Categorical
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Count plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Pie chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                                
+                                                <li class="list-group-item">Numerical
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Histogram
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Dist plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Box plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                </li>
           
+                                                
+          
+                                              </ul>
+          
+                                            </li>
+          
+                                            <li class="list-group-item">Multivariate                                      
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Scatter plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Box chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Bar chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Dist chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Heat map
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                             
+          
+                                            </li>
+                                          </ul>
+                                        </li> 
+                                      </ul>
+                                    </li>
+                                    <!-- <li class="list-group-item">Correlations
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">
+                                          <div class="form-check">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" value="">Interaction between columns
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                  </form>
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="customBtn" type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
         
                
                 
@@ -185,10 +398,77 @@
                 
 
         </div>
+        {% if isCustom=='true' %}
+        <h1 style="margin: 100px;text-align:center;background: grey;color: white;">You custom analysis</h1>
+        <div class="container" style="padding-top: 20px;text-align: center;">
+          <div class="row">
+            <div class="col">
+              <h2>Duplicate Rows</h2>
+              <table class="table table-primary table-bordered" style="text-align: center;">
+                <thead>
+                  <tr>
+                    <th>Duplicate present(Y/N)</th>
+                    <th>Total Duplicate Rows Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key,values in zip(variable_type_and_count.keys(), variable_type_and_count.values()) %}
+                  <tr class="table-secondary">
+                    <td>{{ key }}</td>
+                    <td>{{ values }}</td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="col">
+              <h2>Duplicate Columns</h2>
+              <table class="table table-bordered table-primary" style="text-align: center;">
+                <thead>
+                  <tr>
+                    <th>Column Name</th>
+                    <th>Total Column Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key,values in zip(variable_type_and_count.keys(), variable_type_and_count.values()) %}
+                  <tr class="table-secondary">
+                    <td>{{ key }}</td>
+                    <td>{{ values }}</td>
+                  </tr>
+                 
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="container" style="padding-top: 100px;text-align: center;">
+            <h2>Column Datatypes</h2>          
+            <table class="table table-bordered table-primary" style="text-align: center;">
+              <thead>
+                <tr>
+                  <th>Column Name</th>
+                  <th>Datatype</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-secondary">
+                  <td>{{ shape[0] }}</td>
+                  <td>{{ shape[1] }}</td>  
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        
+
+        </div>
+        {% endif %}
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -201,6 +481,57 @@
             });
         });
     </script>
+
+<script>
+  $(document).ready(function(){
+    
+    $('#customBtn').click(function(){
+        var overview_find_dup_rows = $("#overview-find-dup-rows").is(":checked");
+        var overview_find_dup_cols = $("#overview-find-dup-cols").is(":checked");
+        var overview_find_dtype_cols_details = $("#overview-find-dtype-cols-details").is(":checked");
+        if(overview_find_dup_rows == true){
+          var data = document.getElementById("overview-find-dup-rows").innerHTML
+        }
+        $.ajax({
+        // url:"{{ url_for('application.overview_post_customization') }}",
+        url:"/overview",
+        type:"POST",
+        data:{'overview_find_dup_rows':overview_find_dup_rows,
+               'overview_find_dup_cols': overview_find_dup_cols,
+               'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+               'customize':true
+              },
+        success:function(data){
+          // alert(data);
+          $("#customizeModal").hide();
+          // $("#customizeModal").unload();
+          window.location.href = "overview";
+        }
+      // alert( "Modal submitted with text: ");
+      });
+  
+      
+    });
+
+    $('#uncustomize').click(function(){
+      $.ajax({
+        // url:"{{ url_for('application.overview_post_customization') }}",
+        url:"/overview",
+        type:"POST",
+        data:{
+               'customize':false
+              },
+        success:function(data){
+          // alert(data);
+          
+          // $("#customizeModal").unload();
+          window.location.href = "overview";
+        }
+      // alert( "Modal submitted with text: ");
+      });
+    });
+  });
+</script>
 </body>
 
 </html>

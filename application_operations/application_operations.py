@@ -39,7 +39,7 @@ class application_operations:
       return self.dataset
 
    def shape(self):
-      print(self.dataset.shape, session['filename'])
+      # print(self.dataset.shape, session['filename'])
       return self.dataset.shape
 
    
@@ -62,11 +62,11 @@ class application_operations:
 
    def variable_types(self):
       check=self.dataset.dtypes.value_counts()
-      print(check)
-      print(self.dataset.dtypes)
-      print(check.keys())
+      # print(check)
+      # print(self.dataset.dtypes)
+      # print(check.keys())
       type_and_count = { k:v for (k,v) in zip(check.keys(), check.values) }
-      print(type_and_count)
+      # print(type_and_count)
       return type_and_count
 
 
