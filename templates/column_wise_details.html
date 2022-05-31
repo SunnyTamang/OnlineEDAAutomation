@@ -80,7 +80,10 @@
                                 <a class="nav-link" href="{{ url_for('users.new_project') }}">Upload new dataset</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Customize</a>
+                              <a class="nav-link" href="#customizeModal" data-toggle="modal" ><i class="fa fa-plus" aria-hidden="true"></i> Customize</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="#customizeModal" data-toggle="modal" id="uncustomize"><i class="fa fa-minus" aria-hidden="true"></i> Uncustomize</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('application.about_us')}}">About</a>
@@ -92,6 +95,223 @@
                     </div>
                 </div>
             </nav>
+
+
+            <!-- modal starts -->
+
+            <div class="modal fade" id="customizeModal" tabindex="-1" role="dialog" aria-labelledby="customizeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg"" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="customizeModalLabel">Customize</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{ url_for('application.overview_post_customization') }}" method="POST">
+                      <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Overview
+                                        <ul class="list-group inner">
+                                          <li class="list-group-item">
+                                            <div class="form-check">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" value="" id="overview-find-dup-rows" class="overview-find-dup-rows">Find duplicate rows
+                                              </label>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <ul class="list-group inner">
+                                          <li class="list-group-item">
+                                            <div class="form-check">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" value="" id="overview-find-dup-cols" class="overview-find-dup-cols">Find duplicate columns
+                                              </label>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <ul class="list-group inner">
+                                          <li class="list-group-item">
+                                            <div class="form-check">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" value="" id="overview-find-dtype-cols-details" class="overview-find-dtype-cols-details">Datatype wise column details
+                                              </label>
+                                            </div>
+                                          </li>
+                                        </ul>
+                                    </li>
+                                    <li class="list-group-item">Column Wise Details
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">
+                                          <div class="form-check">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" id="column-wise-advance-stats" value="">Quartile details and advance descrptive stats
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li class="list-group-item">Correlations
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">
+                                          <div class="form-check">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" value="">Interaction between columns
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li class="list-group-item">Visualization
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">Dynamic Graph/Charts
+                                          <ul class="list-group inner">
+                                            <li class="list-group-item">Univariate
+                                              <ul class="list-group inner">
+                                                <li class="list-group-item">Categorical
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Count plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Pie chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                </li>
+                                                
+                                                <li class="list-group-item">Numerical
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Histogram
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Dist plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Box plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                </li>
+          
+                                                
+          
+                                              </ul>
+          
+                                            </li>
+          
+                                            <li class="list-group-item">Multivariate                                      
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Scatter plot
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Box chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Bar chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Dist chart
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                
+                                                  <ul class="list-group inner">
+                                                    <li class="list-group-item">
+                                                      <div class="form-check">
+                                                        <label class="form-check-label">
+                                                          <input type="checkbox" class="form-check-input" value="">Heat map
+                                                        </label>
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                             
+          
+                                            </li>
+                                          </ul>
+                                        </li> 
+                                      </ul>
+                                    </li>
+                                    <!-- <li class="list-group-item">Correlations
+                                      <ul class="list-group inner">
+                                        <li class="list-group-item">
+                                          <div class="form-check">
+                                            <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" value="">Interaction between columns
+                                            </label>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                  </form>
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="customBtn" type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+
+            <!-- modal ends -->
 
             <!-- Tab Navs starts -->
 <!-- Tabs navs -->
@@ -205,13 +425,188 @@
 
             <!-- Tab Navs ends -->
               
-               
+        <!-- Custom Page starts here        -->
+            {% if (isCustom=='true') and (customConfig['column_wise_advance_stats']=='true')%}
+            <h1 style="margin: 20px;text-align:center;background: grey;color: white;">You custom analysis</h1>
+            {% endif %}
+            {% for k,v in customConfig.items(): %}
+              {% if k == 'column_wise_advance_stats' and v=='true': %}
+            <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link active"
+                  id="ex3-tab-3"
+                  data-mdb-toggle="tab"
+                  href="#ex3-tabs-3"
+                  role="tab"
+                  aria-controls="ex3-tabs-3"
+                  aria-selected="true"
+                  >Quantative Statistics</a
+                >
+              </li>
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link"
+                  id="ex3-tab-4"
+                  data-mdb-toggle="tab"
+                  href="#ex3-tabs-4"
+                  role="tab"
+                  aria-controls="ex3-tabs-4"
+                  aria-selected="false"
+                  >Descriptive Statistics</a
+                >
+              </li>
+              
+            </ul>
+            
+            <!-- Tabs navs -->
+            
+            <!-- Tabs content -->
+            <div class="tab-content" id="ex3-content">
+              <div
+                class="tab-pane fade show active"
+                id="ex3-tabs-3"
+                role="tabpanel"
+                aria-labelledby="ex3-tab-3"
+              >
                 
-                
-    </div>
+              
+                <!-- <div class="row spacing">
+                  <a class="anchor-pos anchor-pos-variable" id="pp_var_-27798077419788484"></a> -->
+                  
+                  <div class="container-fluid" style="padding-top: 30px;">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="h4" title="Item_Identifier"><a href="#pp_var_-27798077419788484">Item_Identifier</a>
+                        <br><small>Categorical</small></p><code>HIGH CARDINALITY</code>
+                      <br><code>UNIFORM</code>
+                      <br>
+                      <p class="variable-description"></p>
+                    </div>
+                    <div class="col-sm-3">
+                      <table class="table table-condensed stats">
+                        <tbody>
+                          <tr class="alert">
+                            <th>Distinct</th>
+                            <td>1559</td>
+                          </tr>
+                          <tr>
+                            <th>Distinct (%)</th>
+                            <td>18.3%</td>
+                          </tr>
+                          <tr>
+                            <th>Missing</th>
+                            <td>0</td>
+                          </tr>
+                          <tr>
+                            <th>Missing (%)</th>
+                            <td>0.0%</td>
+                          </tr>
+                          <tr>
+                            <th>Memory size</th>
+                            <td>66.7 KiB</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="col-sm- collapse in" id="minifreqtable">
+                        <table class="mini freq">
+                          <tbody>
+                            <tr class="">
+                              <th width="50%"> FDW13 </th>
+                              <td width="50%">
+                                <div class="bar" style="width:0.1%" data-toggle="tooltip" data-placement="right" data-html="true" data-delay="500" data-original-title="" title=""> &nbsp; </div> 10 </td>
+                            </tr>
+                            <tr class="">
+                              <th width="50%"> FDG33 </th>
+                              <td width="50%">
+                                <div class="bar" style="width:0.1%" data-toggle="tooltip" data-placement="right" data-html="true" data-delay="500" data-original-title="" title=""> &nbsp; </div> 10 </td>
+                            </tr>
+                            <tr class="">
+                              <th width="50%"> NCY18 </th>
+                              <td width="50%">
+                                <div class="bar" style="width:0.1%" data-toggle="tooltip" data-placement="right" data-html="true" data-delay="500" data-original-title="" title=""> &nbsp; </div> 9 </td>
+                            </tr>
+                            <tr class="">
+                              <th width="50%"> FDD38 </th>
+                              <td width="50%">
+                                <div class="bar" style="width:0.1%" data-toggle="tooltip" data-placement="right" data-html="true" data-delay="500" data-original-title="" title=""> &nbsp; </div> 9 </td>
+                            </tr>
+                            <tr class="">
+                              <th width="50%"> DRE49 </th>
+                              <td width="50%">
+                                <div class="bar" style="width:0.1%" data-toggle="tooltip" data-placement="right" data-html="true" data-delay="500" data-original-title="" title=""> &nbsp; </div> 9 </td>
+                            </tr>
+                            <tr class="other">
+                              <th width="50%"> Other values (1554) </th>
+                              <td width="50%">
+                                <div class="bar" style="width:100.0%" data-toggle="tooltip" data-placement="right" data-html="true" data-delay="500" data-original-title="" title=""> 8476&nbsp; </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  
 
+          
+          
+          
+              </div>
+              <div
+                class="tab-pane fade"
+                id="ex3-tabs-4"
+                role="tabpanel"
+                aria-labelledby="ex3-tab-4"
+              >
+                
+                <div class="container" style="text-align: center;">
+                  <h2>Basic Descriptive Analysis</h2>            
+                  <table class="table table-bordered table-primary" style="text-align: center;">
+                    <thead>
+                      <tr>
+                        <th>Descriptive Token</th>
+                        {% for col in desc_columns %}
+                        <th>{{ col }}</th>
+                        {% endfor %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {% for key, value in describe.iterrows() %}
+                     <tr class="table-secondary">
+                      <td>{{ key }}</td>
+                      {% for col in desc_columns %}
+                      <td>{{ value[col] }}</td>
+                      {% endfor %}
+                      <!-- <td></td>     -->
+                    </tr>
+          
+                     {% endfor %}
+                      
+                     
+          
+                    </tbody>
+          
+                    
+                    
+                  </table>
+                </div>
+          
+          
+          
+              </div>
+              
+            </div>
+            {% endif %}
+        {% endfor %}
+            <!-- Custom page ends here -->
+    </div>
+    
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -233,6 +628,112 @@
         });
     });
     </script>
+
+<script>
+  $(document).ready(function(){
+        var overview_find_dup_rows = $("#overview-find-dup-rows").is(":checked");
+        var overview_find_dup_cols = $("#overview-find-dup-cols").is(":checked");
+        var overview_find_dtype_cols_details = $("#overview-find-dtype-cols-details").is(":checked");
+        var column_wise_advance_stats = $("#column-wise-advance-stats").is(":checked");
+        console.log('This is something' ,$("#overview-find-dtype-cols-details").is(":checked"));
+
+    if((overview_find_dup_rows == false && overview_find_dup_cols == false  && overview_find_dtype_cols_details == false)){
+                $.ajax({
+              // url:"{{ url_for('application.overview_post_customization') }}",
+              url:"/column-wise-details",
+              type:"GET",
+              data:{'overview_find_dup_rows':overview_find_dup_rows,
+                    'overview_find_dup_cols': overview_find_dup_cols,
+                    'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+                    'column_wise_advance_stats':column_wise_advance_stats,
+                    'customize':false
+                    },
+              success:function(data){
+                // alert(data);
+                // $("#customizeModal").hide();
+                // $("#customizeModal").unload();
+                
+                // window.location.href = "overview";
+              }
+            // alert( "Modal submitted with text: ");
+            });
+        }
+    $('#customBtn').click(function(){
+        var overview_find_dup_rows = $("#overview-find-dup-rows").is(":checked");
+        var overview_find_dup_cols = $("#overview-find-dup-cols").is(":checked");
+        var overview_find_dtype_cols_details = $("#overview-find-dtype-cols-details").is(":checked");
+        var column_wise_advance_stats = $("#column-wise-advance-stats").is(":checked");
+        console.log($("#overview-find-dtype-cols-details").is(":checked"));
+        if(overview_find_dup_rows == true){
+          var data = document.getElementById("overview-find-dup-rows").innerHTML
+        }
+        if((overview_find_dup_rows == false && overview_find_dup_cols == false  && overview_find_dtype_cols_details == false && column_wise_advance_stats == false)){
+                $.ajax({
+              // url:"{{ url_for('application.overview_post_customization') }}",
+              url:"column-wise-details",
+              type:"POST",
+              data:{'overview_find_dup_rows':overview_find_dup_rows,
+                    'overview_find_dup_cols': overview_find_dup_cols,
+                    'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+                    'column_wise_advance_stats':column_wise_advance_stats,
+                    'customize':false
+                    },
+              success:function(data){
+                // alert(data);
+                $("#customizeModal").hide();
+                // $("#customizeModal").unload();
+                
+                  // console.log($(this))
+                  
+                window.location.href = "column-wise-details";
+              }
+            // alert( "Modal submitted with text: ");
+            });
+        }
+        else if((overview_find_dup_rows == true || overview_find_dup_cols == true  || overview_find_dtype_cols_details == true || column_wise_advance_stats == true)){
+        $.ajax({
+        // url:"{{ url_for('application.overview_post_customization') }}",
+        url:"column-wise-details",
+        type:"POST",
+        data:{'overview_find_dup_rows':overview_find_dup_rows,
+               'overview_find_dup_cols': overview_find_dup_cols,
+               'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+               'column_wise_advance_stats':column_wise_advance_stats,
+               'customize':true
+              },
+        success:function(data){
+          // alert(data);
+          $("#customizeModal").hide();
+          // $("#customizeModal").unload();
+          
+          window.location.href = "column-wise-details";
+        }
+      // alert( "Modal submitted with text: ");
+      });
+    }
+      
+    });
+
+    $('#uncustomize').click(function(){
+      $.ajax({
+        // url:"{{ url_for('application.overview_post_customization') }}",
+        url:"/column-wise-details",
+        type:"POST",
+        data:{
+               'customize':false
+              },
+        success:function(data){
+          // alert(data);
+          
+          // $("#customizeModal").unload();
+          window.location.href = "column-wise-details";
+        }
+      // alert( "Modal submitted with text: ");
+      });
+    });
+  });
+</script>
+
 </body>
 
 </html>

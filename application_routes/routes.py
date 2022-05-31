@@ -15,6 +15,7 @@ import datetime;
 from application_logging.logger import App_Logger
 import matplotlib
 matplotlib.use('Agg')
+from collections import OrderedDict
 # import matplotlib
 # matplotlib.use('Agg')
 # from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -42,22 +43,49 @@ def overview():
     isColDuplicate_byname= application_process.duplicate_column_check_byname()
     isColDuplicate_byvalue = application_process.duplicate_column_check_byvalue()
     column_data_types = application_process.column_data_types()
-    isCustom='false'
+    
     if request.method=='POST':
-        session['isCustom'] = request.form['customize']
-        print(session['isCustom'])
-    # print(session['filename'])
-   
-    return render_template("overview.html", shape=shape, data_stats=dataset_stats, len=len, variable_type_and_count=variable_type_and_count, zip=zip,isCustom=session['isCustom'],isRowDuplicate=isRowDuplicate, duplicate_row_count=len(duplicate_row_count),isColDuplicate_byname=isColDuplicate_byname,isColDuplicate_byvalue=isColDuplicate_byvalue,column_data_types=column_data_types )
+        if request.form['customize'] == 'true':
+            session['customConfig'] = request.form
+        
+            session['isCustom'] = 'true'
+           
+        else:
+            # session['customConfig'] = request.form
+        
+            session['isCustom'] = 'false'
+            
 
-@application.route("/column-wise-details")
+    session['customConfig'] = dict(reversed(list(session['customConfig'].items())))
+    print(session['customConfig'])
+    
+    return render_template("overview.html", reversed=reversed,dict=dict, list=list, shape=shape, data_stats=dataset_stats, len=len, variable_type_and_count=variable_type_and_count, zip=zip,isCustom=session['isCustom'],isRowDuplicate=isRowDuplicate, duplicate_row_count=len(duplicate_row_count),isColDuplicate_byname=isColDuplicate_byname,isColDuplicate_byvalue=isColDuplicate_byvalue,column_data_types=column_data_types,customConfig=session['customConfig'] )
+
+@application.route("/column-wise-details", methods=['POST','GET'])
 def column_wise_details():
 
     application_process= application_operations()
     application_process.import_csv(session['filename'])
     count_check = application_process.get_column_wise_counts()
     desc_columns, describe = application_process.get_basic_descriptive_analysis()
-    return render_template("column_wise_details.html",zip=zip, count_check=count_check,  desc_columns=desc_columns,  describe=describe)
+    
+    if request.method=='POST':
+        if request.form['customize'] == 'true':
+            session['customConfig'] = request.form
+        
+            session['isCustom'] = request.form['customize']
+
+            print('when true: ',request.form)
+        else:
+            # session['customConfig'] = request.form
+        
+            session['isCustom'] = 'false'
+            print('when false: ',request.form)
+    
+    session['customConfig'] = dict(reversed(list(session['customConfig'].items())))
+     
+
+    return render_template("column_wise_details.html",zip=zip, count_check=count_check,  desc_columns=desc_columns,  describe=describe, isCustom=session['isCustom'],customConfig=session['customConfig'])
 
 @application.route("/correlations")
 def correlation():  

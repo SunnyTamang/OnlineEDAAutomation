@@ -398,10 +398,16 @@
                 
 
         </div>
-        {% if isCustom=='true' %}
-        <h1 style="margin: 20px;text-align:center;background: grey;color: white;">You custom analysis</h1>
+        {% if (isCustom=='true') and (customConfig['overview_find_dup_rows']=='true' or customConfig['overview_find_dup_cols']=='true' or customConfig['overview_find_dtype_cols_details']=='true') %}
+        <h1 id="custom_line" style="margin: 20px;text-align:center;background: grey;color: white;">You custom analysis</h1>
+        {% for k,v in customConfig.items(): %}
+          {% if k == 'overview_find_dup_rows' and v=='true': %}
         <div class="container" style="padding-top: 100px;text-align: center;">
-          <h2>Duplicate Rows</h2>          
+          <h2>Duplicate Rows</h2> 
+          <p class="text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+          </svg> Total duplicate rows count does not include one which is already there.</p>        
           <table class="table table-bordered table-primary" style="text-align: center;">
             <thead>
               <tr>
@@ -418,6 +424,8 @@
             </tbody>
           </table>
         </div>
+        {% endif %}
+        {% if k == 'overview_find_dup_cols' and v=='true': %}
         <div class="container" style="padding-top: 100px;text-align: center;">
           <div class="row">
             <div class="col">
@@ -464,6 +472,8 @@
             </div>
           </div>
         </div>
+        {% endif %}
+        {% if k == 'overview_find_dtype_cols_details' and v=='true': %}
           <div class="container" style="padding-top: 100px;text-align: center;">
             <h2>Column Datatypes</h2>          
             <table class="table table-bordered table-primary" style="text-align: center;">
@@ -483,8 +493,8 @@
               </tbody>
             </table>
           </div>
-        
-
+        {% endif %}
+          {% endfor %}
         <!-- </div> -->
         {% endif %}
     </div>
@@ -506,14 +516,60 @@
 
 <script>
   $(document).ready(function(){
-    
+
+        var overview_find_dup_rows = $("#overview-find-dup-rows").is(":checked");
+        var overview_find_dup_cols = $("#overview-find-dup-cols").is(":checked");
+        var overview_find_dtype_cols_details = $("#overview-find-dtype-cols-details").is(":checked");
+        var column_wise_advance_stats = $("#column-wise-advance-stats").is(":checked");
+    if((overview_find_dup_rows == false && overview_find_dup_cols == false  && overview_find_dtype_cols_details == false)){
+                $.ajax({
+              // url:"{{ url_for('application.overview_post_customization') }}",
+              url:"/overview",
+              type:"GET",
+              data:{'overview_find_dup_rows':overview_find_dup_rows,
+                    'overview_find_dup_cols': overview_find_dup_cols,
+                    'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+                    'column_wise_advance_stats':column_wise_advance_stats,
+                    'customize':false
+                    },
+              success:function(data){
+                
+              }
+            // alert( "Modal submitted with text: ");
+            });
+        }
+   
     $('#customBtn').click(function(){
         var overview_find_dup_rows = $("#overview-find-dup-rows").is(":checked");
         var overview_find_dup_cols = $("#overview-find-dup-cols").is(":checked");
         var overview_find_dtype_cols_details = $("#overview-find-dtype-cols-details").is(":checked");
+        var column_wise_advance_stats = $("#column-wise-advance-stats").is(":checked");
         if(overview_find_dup_rows == true){
           var data = document.getElementById("overview-find-dup-rows").innerHTML
         }
+        if((overview_find_dup_rows == false && overview_find_dup_cols == false  && overview_find_dtype_cols_details == false)){
+                $.ajax({
+              // url:"{{ url_for('application.overview_post_customization') }}",
+              url:"/overview",
+              type:"POST",
+              data:{'overview_find_dup_rows':overview_find_dup_rows,
+                    'overview_find_dup_cols': overview_find_dup_cols,
+                    'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+                    'column_wise_advance_stats':column_wise_advance_stats,
+                    'customize':false
+                    },
+              success:function(data){
+                // alert(data);
+                $("#customizeModal").hide();
+                // $("#customizeModal").unload();
+                
+                window.location.href = "overview";
+                $('#custom_line').hide();
+              }
+            // alert( "Modal submitted with text: ");
+            });
+        }
+        else if((overview_find_dup_rows == true || overview_find_dup_cols == true  || overview_find_dtype_cols_details == true || column_wise_advance_stats == true)){
         $.ajax({
         // url:"{{ url_for('application.overview_post_customization') }}",
         url:"/overview",
@@ -521,17 +577,21 @@
         data:{'overview_find_dup_rows':overview_find_dup_rows,
                'overview_find_dup_cols': overview_find_dup_cols,
                'overview_find_dtype_cols_details': overview_find_dtype_cols_details,
+               'column_wise_advance_stats':column_wise_advance_stats,
                'customize':true
               },
         success:function(data){
           // alert(data);
           $("#customizeModal").hide();
+          
           // $("#customizeModal").unload();
+          
           window.location.href = "overview";
+          $('#custom_line').show();
         }
       // alert( "Modal submitted with text: ");
       });
-  
+    }
       
     });
 
@@ -547,7 +607,9 @@
           // alert(data);
           
           // $("#customizeModal").unload();
+          
           window.location.href = "overview";
+          $('#custom_line').hide();
         }
       // alert( "Modal submitted with text: ");
       });

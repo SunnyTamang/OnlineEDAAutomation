@@ -178,6 +178,7 @@ def from_dashboard():
     """
     # return render_template("landing.html")
     if request.method == "POST":
+        session['isCustom']='false'
         session['from_dashboard'] = True
         print(request.form.get("projectfilename"))
         session['filename'] = os.path.join("data_upload_folder", request.form.get("projectfilename"))
